@@ -1,0 +1,11 @@
+.input {
+  @apply outline-0 pr-4 pl-4 py-3 bg-black-two rounded-lg w-full paragraph-4 placeholder-white text-white;
+
+  &.with-prefix {
+    @apply pl-12;
+  }
+}
+
+.form-field {
+  @apply relative;
+}
