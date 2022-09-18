@@ -1,1 +1,1 @@
-<button class="btn solid">Create</button>
+<a href="/new" class="btn solid">Create</a>

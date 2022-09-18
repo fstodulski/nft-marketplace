@@ -9,3 +9,8 @@
 .form-field {
   @apply relative;
 }
+
+label,
+.label {
+  @apply text-sm text-gray-two font-semibold mb-0.5;
+}

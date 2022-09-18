@@ -1,7 +1,7 @@
 <header class="w-full h-[308px] bg-gray-three relative">
   <figure class="w-full h-full overflow-hidden">
     <img
-      class="w-full mx-auto object-contain"
+      class="w-full h-full mx-auto object-cover"
       src="https://images.unsplash.com/photo-1557784873-df9d3dcdf936?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1934&q=80"
       alt=""
     />
