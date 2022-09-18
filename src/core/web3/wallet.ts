@@ -1,4 +1,5 @@
 import { ethers } from 'ethers';
+import { WalletStore } from '../store/wallet';
 
 const provider = () => {
   if (typeof window !== 'undefined') {
@@ -6,6 +7,15 @@ const provider = () => {
   }
 };
 
+const connectWallet = async () => {
+  const [account] = await provider()?.send('eth_requestAccounts', []);
+
+  WalletStore.set({
+    address: account
+  });
+};
+
 export const Wallet = {
-  provider
+  provider,
+  connectWallet
 };
