@@ -1,6 +1,6 @@
 <script lang="ts">
-  import UploadFile from './containers/UploadFile/UploadFile.svelte';
   import FromContract from './containers/FromContract/FromContract.svelte';
+  import UploadFile from './containers/UploadFile/UploadFile.svelte';
 
   enum Tab {
     UploadFile,

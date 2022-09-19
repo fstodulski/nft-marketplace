@@ -1,5 +1,15 @@
 <script lang="ts">
-  import MarketItemsGrid from '$components/MarketItemsGrid/MarketItemsGrid.svelte';
+  import { onMount } from 'svelte';
+
+  import { Marketplace } from '$core/web3/marketplace';
+
+  const _fetchHotBids = async (): Promise<void> => {
+    await Marketplace.fetchMarketItems();
+  };
+
+  onMount(async () => {
+    await _fetchHotBids();
+  });
 </script>
 
 <section class="pb-10 border-b border-b-black-one">

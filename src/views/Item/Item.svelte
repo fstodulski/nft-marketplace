@@ -1,12 +1,15 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+  
+  import { page } from '$app/stores';
+  
+  import { NftRepository } from '$core/repository/nft/nft.repository';
+  import { Wallet } from '$core/web3/wallet';
+  
   import CreatorDetails from './components/CreatorDetails/CreatorDetails.svelte';
   import ItemMetadata from './components/ItemMetadata/ItemMetadata.svelte';
   import ItemTabs from './components/ItemTabs/ItemTabs.svelte';
-  import { page } from '$app/stores';
-  import { onMount } from 'svelte';
-  import { NftRepository } from '$core/repository/nft/nft.repository';
   import { ItemStore } from './store/item.store';
-  import { Wallet } from '$core/web3/wallet';
 
   const _fetchItem = async () => {
     const { contract, id } = $page.params;

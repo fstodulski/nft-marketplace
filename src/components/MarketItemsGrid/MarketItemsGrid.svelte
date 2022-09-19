@@ -1,6 +1,7 @@
 <script lang="ts">
-  import MarketItemBox from './components/MarketItemBox/MarketItemBox.svelte';
   import type { OwnedNft } from '$core/models/get-nfts.model';
+  
+  import MarketItemBox from './components/MarketItemBox/MarketItemBox.svelte';
 
   export let items: Array<OwnedNft> = [];
 </script>

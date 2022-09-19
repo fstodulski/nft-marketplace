@@ -1,14 +1,17 @@
 <script lang="ts">
-  import MarketItemsGrid from '$components/MarketItemsGrid/MarketItemsGrid.svelte';
-  import { MagnifyingGlass } from 'svelte-heros-v2';
   import { onMount } from 'svelte';
+  import { MagnifyingGlass } from 'svelte-heros-v2';
+
   import { NftRepository } from '$core/repository/nft/nft.repository';
   import { WalletStore } from '$core/store/wallet';
+
+  import MarketItemsGrid from '$components/MarketItemsGrid/MarketItemsGrid.svelte';
+
   import { UserItemsStore } from './store/user-items.store';
 
   export let className: string;
 
-  const _fetchNFTs = async () => {
+  const _fetchNFTs = async (): Promise<void> => {
     try {
       const res = await NftRepository.byOwner($WalletStore.address);
 

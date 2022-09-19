@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Heart } from 'svelte-heros-v2';
+  
   import type { OwnedNft } from '$core/models/get-nfts.model';
 
   export let nft: OwnedNft;

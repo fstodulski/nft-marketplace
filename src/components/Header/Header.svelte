@@ -1,5 +1,6 @@
 <script lang="ts">
   import { MagnifyingGlass } from 'svelte-heros-v2';
+
   import Navigation from './components/Navigation/Navigation.svelte';
   import ConnectWallet from './containers/ConnectWallet/ConnectWallet.svelte';
   import CreateNewItem from './containers/CreateNewItem/CreateNewItem.svelte';
@@ -7,9 +8,11 @@
 
 <header class="bg-gray-50 dark:bg-dark py-4 px-2 border-b border-b-black-one">
   <div class="wrapper flex items-center justify-between gap-3">
-    <figure class="w-8 h-8 bg-red-violet rounded-lg flex-none flex justify-center items-center">
-      <span class="w-5 h-5 border-2 border-dark rounded-full" />
-    </figure>
+    <a href="/">
+      <figure class="w-8 h-8 bg-red-violet rounded-lg flex-none flex justify-center items-center">
+        <span class="w-5 h-5 border-2 border-dark rounded-full" />
+      </figure>
+    </a>
 
     <form class="shrink w-full max-w-sm mr-auto">
       <div class="form-field">

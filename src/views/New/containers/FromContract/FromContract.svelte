@@ -1,8 +1,17 @@
 <script lang="ts">
-  import { required } from 'svelte-forms/validators';
   import { field, form } from 'svelte-forms';
+  import { required } from 'svelte-forms/validators';
 
-  let disabled = true;
+  import { CONTRACT } from '../../../../core/constants/contract';
+  import { FromContractService } from './FromContract.service';
+
+  enum AllowedStatus {
+    NotAllowed,
+    Allowed,
+    DonKnowYet
+  }
+
+  let allowedStatus: AllowedStatus = AllowedStatus.DonKnowYet;
 
   const contractAddress = field('nftContractAddress', '', [required()]);
   const tokenId = field('tokenId', '', [required()]);
@@ -10,7 +19,30 @@
 
   const nftForm = form(contractAddress, tokenId, price);
 
-  const allowForMarketplace = async () => {};
+  const allowForMarketplace = async (): Promise<void> => {
+    await FromContractService.allowMarketPlace($contractAddress.value, $tokenId.value);
+  };
+
+  const isMarketplaceApproved = async (): Promise<void> => {
+    const res = await FromContractService.isMarketplaceApproved(
+      $contractAddress.value,
+      $tokenId.value
+    );
+
+    if (res === CONTRACT.address) {
+      allowedStatus = AllowedStatus.Allowed;
+    }
+  };
+
+  const submitItem = async (): Promise<void> => {
+    if ($nftForm.valid) {
+      await FromContractService.createMarketItem(
+        $contractAddress.value,
+        $tokenId.value,
+        $price.value
+      );
+    }
+  };
 </script>
 
 <div class="flex flex-col pt-8">
@@ -34,15 +66,20 @@
 
     <div class="form-field flex flex-col">
       <label for="price">Price</label>
-      <input class="input" type="number" id="price" bind:value={$price.value} />
+      <input class="input" type="text" id="price" bind:value={$price.value} />
     </div>
 
     <div class="flex gap-2 justify-end">
-      <button {disabled} class="btn solid">
-        {#if disabled}
-          Allow for Marketplace
-        {:else}
-          Submit
+      <button class="btn solid" type="button">
+        {#if allowedStatus === AllowedStatus.NotAllowed}
+          <span on:click={allowForMarketplace}> Allow for Marketplace </span>
+        {/if}
+
+        {#if allowedStatus === AllowedStatus.DonKnowYet}
+          <span on:click={isMarketplaceApproved}>Check if it's allowed</span>
+        {/if}
+        {#if allowedStatus === AllowedStatus.Allowed}
+          <span on:click={submitItem}>Submit</span>
         {/if}
       </button>
     </div>

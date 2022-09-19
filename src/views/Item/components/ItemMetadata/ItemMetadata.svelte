@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Heart } from 'svelte-heros-v2';
+  
   import { ItemStore } from '../../store/item.store';
 </script>
 

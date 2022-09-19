@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { WalletStore } from '$core/store/wallet';
+
   import UserHeader from './containers/UserHeader/UserHeader.svelte';
   import UserItems from './containers/UserItems/UserItems.svelte';
-  import { WalletStore } from '$core/store/wallet';
 </script>
 
 <UserHeader />
