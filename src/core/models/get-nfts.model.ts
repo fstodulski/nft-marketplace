@@ -1,12 +1,12 @@
 import type { Contract } from './contract.model';
 
 export interface GetNftsResponse {
-  ownedNfts?: OwnedNft[];
+  ownedNfts?: NFTMetadata[];
   totalCount?: number;
   blockHash?: string;
 }
 
-export interface OwnedNft {
+export interface NFTMetadata {
   contract?: Contract;
   id?: ID;
   title?: string;

@@ -1,6 +1,6 @@
-import type { OwnedNft } from './get-nfts.model';
+import type { NFTMetadata } from './get-nfts.model';
 
-export interface GetNFTResponse extends OwnedNft {
+export interface GetNFTResponse extends NFTMetadata {
   balance?: string;
   error?: string;
 }

@@ -1,14 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { Marketplace } from '$core/web3/marketplace';
+  import MarketItemsGrid from '$components/MarketItemsGrid/MarketItemsGrid.svelte';
 
-  const _fetchHotBids = async (): Promise<void> => {
-    await Marketplace.fetchMarketItems();
-  };
+  import { HotBidsService } from './HotBids.service';
+  import { HotBidsStore } from './store/HotBids.store.js';
 
   onMount(async () => {
-    await _fetchHotBids();
+    await HotBidsService.getHotBids();
   });
 </script>
 
@@ -16,7 +15,9 @@
   <div class="flex flex-col items-center wrapper px-2 gap-5">
     <h3 class="heading-3 dark:text-white mr-auto">Hot Bids</h3>
 
-    <!--    <MarketItemsGrid items={[1, 2, 3, 4, 5, 6, 7, 7, 8, 8, 1, 1]} />-->
+    {#if $HotBidsStore.hotBids.length > 0}
+      <MarketItemsGrid items={$HotBidsStore.hotBids} />
+    {/if}
 
     <button class="btn outlined w-full mx-auto w-auto">Load More</button>
   </div>
