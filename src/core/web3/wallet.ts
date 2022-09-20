@@ -23,8 +23,6 @@ const approveContract = async (nftContractAddress: string, tokenId: number) => {
 
   try {
     const req = await contract.approve(CONTRACT.address, tokenId);
-
-    console.log(req);
   } catch (e) {
     console.error(e);
   }

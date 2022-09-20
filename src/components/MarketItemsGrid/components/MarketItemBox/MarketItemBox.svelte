@@ -4,8 +4,6 @@
   import type { NFTMetadata } from '$core/models/get-nfts.model';
 
   export let nft: NFTMetadata;
-
-  console.log(nft);
 </script>
 
 <div class="px-2 py-4 rounded-xl flex flex-col gap-2 bg-black-three">
