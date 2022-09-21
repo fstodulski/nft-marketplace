@@ -1,9 +1,9 @@
-import { Wallet } from '$core/web3/wallet';
-import { Marketplace } from '../../../../core/web3/marketplace';
+import { WalletService } from '$core/web3/wallet.service';
+import { MarketplaceService } from '$core/web3/marketplace.service';
 
 const allowMarketPlace = async (nftContract: string, tokenId: number): Promise<any> => {
   try {
-    return await Wallet.approveContract(nftContract, tokenId);
+    return await WalletService.approveContract(nftContract, tokenId);
   } catch (e) {
     throw new Error('Cant allow Marketplace');
   }
@@ -11,7 +11,7 @@ const allowMarketPlace = async (nftContract: string, tokenId: number): Promise<a
 
 const isMarketplaceApproved = async (nftContract: string, tokenId: number): Promise<string> => {
   try {
-    return await Wallet.isMarketplaceApproved(nftContract, tokenId);
+    return await WalletService.isMarketplaceApproved(nftContract, tokenId);
   } catch (e) {
     throw new Error(`Can't check if Marketplace is allowed`);
   }
@@ -23,7 +23,7 @@ const createMarketItem = async (
   price: string
 ): Promise<any> => {
   try {
-    const req = await Marketplace.createMarketItem(nftContract, tokenId, price);
+    const req = await MarketplaceService.createMarketItem(nftContract, tokenId, price);
   } catch (e) {
     console.error(e);
   }

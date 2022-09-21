@@ -14,7 +14,11 @@
       "$containers/*": ["src/containers/*"],
       "$views/*": ["src/views/*"],
       "$core/*": ["src/core/*"]
-    }
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./node_modules/@prisma/client"
+    ]
   }
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { WalletStore } from '$core/store/wallet';
-  import { Wallet } from '$core/web3/wallet';
+  import { WalletService } from '$core/web3/wallet';
 
   let isConnected: boolean;
 
@@ -8,5 +8,5 @@
 </script>
 
 {#if !isConnected}
-  <button class="btn outlined" on:click={Wallet.connectWallet}> Connect </button>
+  <button class="btn outlined" on:click={WalletService.connectWallet}> Connect </button>
 {/if}

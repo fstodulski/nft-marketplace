@@ -1,8 +1,13 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { field, form } from 'svelte-forms';
   import { required } from 'svelte-forms/validators';
 
-  import { CONTRACT } from '../../../../core/constants/contract';
+  import { CONTRACT } from '$core/constants/contract';
+  import { MarketplaceService } from '$core/web3/marketplace';
+
+  import ConfettiWrapper from '$components/ConfettiWrapper/ConfettiWrapper.svelte';
+
   import { FromContractService } from './FromContract.service';
 
   enum AllowedStatus {
@@ -31,6 +36,8 @@
 
     if (res === CONTRACT.address) {
       allowedStatus = AllowedStatus.Allowed;
+    } else {
+      allowedStatus = AllowedStatus.NotAllowed;
     }
   };
 
@@ -43,6 +50,10 @@
       );
     }
   };
+
+  onMount(async () => {
+    await MarketplaceService.subscribeOnListItem();
+  });
 </script>
 
 <div class="flex flex-col pt-8">
@@ -85,3 +96,4 @@
     </div>
   </form>
 </div>
+<ConfettiWrapper />
