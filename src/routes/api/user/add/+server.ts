@@ -1,5 +1,5 @@
 import type { RequestEvent, RequestHandler } from '@sveltejs/kit';
-import { prisma } from '$core/utils/prisma-client';
+import { prisma } from '$core/api/prisma-client';
 
 export const POST: RequestHandler = async ({ request }: RequestEvent) => {
   const body = await request.json();

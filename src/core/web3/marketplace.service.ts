@@ -26,6 +26,10 @@ export class MarketplaceService {
       const req = await _contract.createMarketItem(nftContract, tokenId, parseEther(price), {
         value: parseEther('0.1')
       });
+
+      const tx = req.wait();
+
+      console.log(tx);
     } catch (e) {
       console.error(e);
     }

@@ -4,7 +4,7 @@
   import { required } from 'svelte-forms/validators';
 
   import { CONTRACT } from '$core/constants/contract';
-  import { MarketplaceService } from '$core/web3/marketplace';
+  import { MarketplaceService } from '$core/web3/marketplace.service';
 
   import ConfettiWrapper from '$components/ConfettiWrapper/ConfettiWrapper.svelte';
 
@@ -25,7 +25,7 @@
   const nftForm = form(contractAddress, tokenId, price);
 
   const allowForMarketplace = async (): Promise<void> => {
-    await FromContractService.allowMarketPlace($contractAddress.value, $tokenId.value);
+    const res = await FromContractService.allowMarketPlace($contractAddress.value, $tokenId.value);
   };
 
   const isMarketplaceApproved = async (): Promise<void> => {
@@ -52,7 +52,7 @@
   };
 
   onMount(async () => {
-    await MarketplaceService.subscribeOnListItem();
+    await MarketplaceService.subscribeOnMarketItemCreated();
   });
 </script>
 

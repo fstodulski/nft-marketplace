@@ -1,6 +1,6 @@
 <script lang="ts">
   import { WalletStore } from '$core/store/wallet';
-  import { WalletService } from '$core/web3/wallet';
+  import { WalletService } from '$core/web3/wallet.service';
 
   let isConnected: boolean;
 

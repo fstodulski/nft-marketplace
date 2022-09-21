@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
 
-  import { WalletService } from '$core/web3/wallet';
+  import { WalletService } from '$core/web3/wallet.service';
 
   import Footer from '$containers/Footer/Footer.svelte';
 

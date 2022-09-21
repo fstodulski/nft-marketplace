@@ -5,7 +5,7 @@
 
   import { NftRepository } from '$core/repository/nft/nft.repository';
   import { tilt } from '$core/utils/tilt';
-  import { WalletService } from '$core/web3/wallet';
+  import { WalletService } from '$core/web3/wallet.service';
 
   import CreatorDetails from './components/CreatorDetails/CreatorDetails.svelte';
   import ItemMetadata from './components/ItemMetadata/ItemMetadata.svelte';

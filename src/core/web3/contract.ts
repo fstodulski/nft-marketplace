@@ -1,13 +1,13 @@
 import { ethers } from 'ethers';
 import { CONTRACT } from '../constants/contract';
-import { WalletService } from './wallet';
+import { WalletService } from './wallet.service';
 
 export const GetContractViaMetamask = async () => {
-  return new ethers.Contract(
-    CONTRACT.address,
-    CONTRACT.abi,
-    await WalletService.metamaskProvider()?.getSigner()
-  );
+  const provider = await WalletService.metamaskProvider();
+
+  if (provider) {
+    return new ethers.Contract(CONTRACT.address, CONTRACT.abi, await provider.getSigner());
+  }
 };
 
 export const GetContractViaInfura = async () => {

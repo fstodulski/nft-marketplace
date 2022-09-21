@@ -1,5 +1,5 @@
 import type { RequestEvent, RequestHandler } from '@sveltejs/kit';
-import { prisma } from '$core/utils/prisma-client';
+import { prisma } from '$core/api/prisma-client';
 
 export const GET: RequestHandler = async ({ params }: RequestEvent) => {
   const req = await prisma.user.findMany();
