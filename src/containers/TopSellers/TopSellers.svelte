@@ -1,12 +1,19 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import axios from 'axios';
+
+  import { UserRepository } from '$core/repository/user/user.repository';
 
   import TopSellerBox from './components/TopSellerBox/TopSellerBox.svelte';
 
+  let topSellers: Array<any> = [];
+
+  const _fetchTopSellers = async (): Promise<void> => {
+    const res = await UserRepository.topSellers();
+
+    topSellers = res;
+  };
   onMount(async () => {
-    const res = await axios.get('/api/user/add');
-    console.log(res.data);
+    await _fetchTopSellers();
   });
 </script>
 
@@ -14,11 +21,8 @@
   <h3 class="heading-3 text-white">Top Sellers</h3>
 
   <div class="flex flex-nowrap w-full overflow-x-scroll scrollbar-hide gap-3">
-    <TopSellerBox />
-    <TopSellerBox />
-    <TopSellerBox />
-    <TopSellerBox />
-    <TopSellerBox />
-    <TopSellerBox />
+    {#each topSellers as topSeller}
+      <TopSellerBox user={topSeller} />
+    {/each}
   </div>
 </section>

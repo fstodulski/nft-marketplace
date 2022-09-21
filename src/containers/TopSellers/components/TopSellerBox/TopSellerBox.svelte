@@ -1,5 +1,8 @@
 <script lang="ts">
   import { Check } from 'svelte-heros-v2';
+  import type { User } from '@prisma/client';
+
+  export let user: User;
 </script>
 
 <div
@@ -11,7 +14,7 @@
     1
   </div>
 
-  <a href="/user/1">
+  <a href="/user/{user.address}">
     <figure class="rounded-full w-20 h-20 bg-black-four relative">
       <div
         class="w-5 h-5 absolute bottom-0 right-1 rounded-full bg-green-500 flex items-center justify-center p-0.5"
@@ -21,7 +24,7 @@
     </figure>
   </a>
 
-  <span class="paragraph-2 font-semibold text-white mt-2 mb-1">Mia Ayana</span>
+  <span class="paragraph-2 font-semibold text-white mt-2 mb-1">{user?.name}</span>
   <span class="paragraph-2 font-semibold text-white">
     5.250
     <span class="font-light"> ETH </span>

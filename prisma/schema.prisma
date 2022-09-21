@@ -12,7 +12,9 @@ datasource db {
 
 model User {
     id String @id @default(uuid())
-    address String
+    address String @unique
     imageUrl String
     name String
 }
+
+
