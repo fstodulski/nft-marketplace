@@ -3,6 +3,8 @@
 
   import { page } from '$app/stores';
 
+  import UserName from './UserName/UserName.svelte';
+
   let isCopied = false;
 
   const copy = async (): Promise<void> => {
@@ -29,20 +31,24 @@
     <div class="relative flex flex-col items-center">
       <figure class="w-56 h-56 rounded-full bg-gray-three mx-auto border-8 border-dark" />
 
-      <div class="flex items-center">
-        <h1
-          title={$page.params.id}
-          class="heading-1 text-white max-w-[200px] overflow-hidden overflow-ellipsis relative"
-        >
-          {$page.params.id}
-        </h1>
-        <Link on:click={copy} class="text-white cursor-pointer" />
-        <div
-          class:active={isCopied}
-          class="absolute opacity-0 pointer-events-none -bottom-4 translate-y-0 duration-300 text-center py-1 rounded-md left-0 right-0 mx-auto bg-black-three text-white shadow-2xl text-xs w-32 "
-        >
-          Address Copied
+      <div class="flex flex-col items-center">
+        <div class="flex items-center">
+          <h1
+            title={$page.params.id}
+            class="heading-1 text-white max-w-[200px] overflow-hidden overflow-ellipsis relative"
+          >
+            {$page.params.id}
+          </h1>
+          <Link on:click={copy} class="text-white cursor-pointer" />
+          <div
+            class:active={isCopied}
+            class="absolute opacity-0 pointer-events-none -bottom-4 translate-y-0 duration-300 text-center py-1 rounded-md left-0 right-0 mx-auto bg-black-three text-white shadow-2xl text-xs w-32 "
+          >
+            Address Copied
+          </div>
         </div>
+
+        <UserName />
       </div>
     </div>
   </div>

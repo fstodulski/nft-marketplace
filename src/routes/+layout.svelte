@@ -21,8 +21,8 @@
   };
 
   onMount(async (): Promise<void> => {
-    await _connectWallet();
-    await _login();
+    // await _connectWallet();
+    // await _login();
     document.getElementsByTagName('body')[0].classList.add('dark');
   });
 </script>

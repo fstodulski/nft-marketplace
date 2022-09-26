@@ -1,11 +1,10 @@
 import { alchemyClient } from '$core/http/http-client';
-import type { GetNftsResponse } from '$core/models/get-nfts.model';
-import type { GetNFTResponse } from '$core/models/get-nft.model';
+import type { NFTItem } from '$core/models/nft-iitem.models';
 
 export class NftRepository {
-  public static async byOwner(address: string): Promise<any> {
+  public static async byOwner(address: string): Promise<Array<NFTItem>> {
     try {
-      const req = await alchemyClient.get<GetNftsResponse>('/getNFTs', {
+      const req = await alchemyClient.get<{ ownedNfts: Array<NFTItem> }>('/getNFTs', {
         params: {
           owner: address,
           pageSize: 24,
@@ -13,17 +12,16 @@ export class NftRepository {
         }
       });
 
-      console.log(req);
-
       return req.data.ownedNfts;
     } catch (e) {
       console.error(e);
+      throw new Error(`Can't fetch nft by owner`);
     }
   }
 
-  public static async single(contractAddress: string, tokenId: string): Promise<any> {
+  public static async single(contractAddress: string, tokenId: number): Promise<NFTItem> {
     try {
-      const req = await alchemyClient.get<GetNFTResponse>('/getNFTMetadata', {
+      const req = await alchemyClient.get<NFTItem>('/getNFTMetadata', {
         params: {
           contractAddress,
           tokenId
@@ -32,7 +30,7 @@ export class NftRepository {
 
       return req.data;
     } catch (e) {
-      console.error(e);
+      throw new Error(`Can't get single NFT item`);
     }
   }
 }

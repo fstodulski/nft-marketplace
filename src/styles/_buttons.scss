@@ -9,6 +9,10 @@
     @apply bg-none bg-gray-three text-gray-two opacity-75 cursor-not-allowed #{!important};
   }
 
+  &.lg {
+    @apply py-3 px-10;
+  }
+
   &.solid {
     background: var(--red-linear);
     @apply text-white;

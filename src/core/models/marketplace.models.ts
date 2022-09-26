@@ -1,12 +1,12 @@
 import type { BigNumber } from 'ethers';
 
-interface FetchMarketItem {
+interface MarketItem {
   nftContract: string;
   owner: string;
   seller: string;
 }
 
-export interface FetchMarketItemsRaw extends FetchMarketItem {
+export interface MarketItemsRaw extends MarketItem {
   itemId: {
     _hex: BigNumber;
   };
@@ -15,7 +15,7 @@ export interface FetchMarketItemsRaw extends FetchMarketItem {
   };
 }
 
-export interface FetchMarketItemParsed extends FetchMarketItem {
+export interface MarketItemParsed extends MarketItem {
   itemId: number;
   price: string;
 }

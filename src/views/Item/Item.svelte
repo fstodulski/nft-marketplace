@@ -3,29 +3,27 @@
 
   import { page } from '$app/stores';
 
-  import { NftRepository } from '$core/repository/nft/nft.repository';
   import { tilt } from '$core/utils/tilt';
-  import { WalletService } from '$core/web3/wallet.service';
 
   import CreatorDetails from './components/CreatorDetails/CreatorDetails.svelte';
   import ItemMetadata from './components/ItemMetadata/ItemMetadata.svelte';
   import ItemTabs from './components/ItemTabs/ItemTabs.svelte';
+  import { itemService } from './Item.service';
   import { ItemStore } from './store/item.store';
+
+  const buyItem = async (): Promise<void> => {
+    const { contract, id } = $page.params;
+
+    await itemService.buyItem(contract, id, $ItemStore.price);
+  };
 
   const _fetchItem = async (): Promise<void> => {
     const { contract, id } = $page.params;
 
-    try {
-      const res = await NftRepository.single(contract, id);
-
-      ItemStore.set(res);
-    } catch (e) {
-      console.error(e);
-    }
+    await itemService.fetchItem(contract, parseInt(id));
   };
 
   onMount(async () => {
-    await WalletService.connectWallet();
     await _fetchItem();
   });
 </script>
@@ -45,6 +43,11 @@
 
         <CreatorDetails />
         <ItemTabs />
+
+        <div class="flex items-center gap-5">
+          <button class="btn solid lg" on:click={buyItem}>Buy for {$ItemStore.price} ETH</button>
+          <button class="btn outlined lg">Make an offer</button>
+        </div>
       </article>
     {/if}
   </section>

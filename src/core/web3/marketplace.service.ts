@@ -1,17 +1,21 @@
-import { formatEther, parseEther } from 'ethers/lib/utils';
+import { parseEther } from 'ethers/lib/utils';
 import { GetContractViaInfura, GetContractViaMetamask } from './contract';
-import type { FetchMarketItemParsed, FetchMarketItemsRaw } from '$core/models/marketplace.models';
-import { BigNumber } from 'ethers';
+import type { MarketItemParsed, MarketItemsRaw } from '$core/models/marketplace.models';
+import type { Contract } from 'ethers';
 import { ConfettiWrapperStore } from '$components/ConfettiWrapper/ConfettiWrapper.store';
+import { NftRepository } from '../repository/nft/nft.repository';
+import { marketItemParser } from '../utils/marketitem-parser';
 
 export class MarketplaceService {
-  public static async getMarketItem(tokenId: number): Promise<unknown> {
+  public static async getMarketItem(tokenId: number): Promise<MarketItemParsed> {
     try {
-      const _contract = await GetContractViaMetamask();
+      const _contract = await GetContractViaInfura();
 
-      return await _contract.getMarketItem(tokenId);
+      const item: MarketItemsRaw = await _contract.getMarketItem(tokenId);
+
+      return marketItemParser(item);
     } catch (e) {
-      console.error(e);
+      throw new Error(`Can't fetch item`);
     }
   }
 
@@ -35,20 +39,25 @@ export class MarketplaceService {
     }
   }
 
-  public static async fetchMarketItems(): Promise<Array<FetchMarketItemParsed>> {
+  public static async fetchMarketItems(
+    customContractProvider?: Contract
+  ): Promise<Array<NFTMetadata>> {
     try {
-      const _contract = await GetContractViaInfura();
+      const _contract = customContractProvider || (await GetContractViaInfura());
+
       const res = (await _contract.fetchMarketItems()) as Array<FetchMarketItemsRaw>;
 
-      return res.map(
-        (marketItem): FetchMarketItemParsed => ({
-          owner: marketItem.owner,
-          nftContract: marketItem.nftContract,
-          seller: marketItem.seller,
-          itemId: BigNumber.from(marketItem.itemId._hex).toNumber(),
-          price: formatEther(marketItem.price._hex)
-        })
-      );
+      const parsedMetadata = res.map(marketItemParser);
+
+      const items = parsedMetadata.map(async (item) => {
+        const data = await NftRepository.single(item.nftContract, item.itemId.toString());
+        return {
+          ...item,
+          ...data
+        };
+      });
+
+      return await Promise.all([...items]);
     } catch (e) {
       console.error(e);
       throw new Error(`Can't fetch Market Items`);
@@ -73,5 +82,18 @@ export class MarketplaceService {
         };
       }
     );
+  }
+
+  public static async createMarketSale(
+    nftContractAddress: string,
+    tokenId: number,
+    price: string
+  ): Promise<void> {
+    const _contract = await GetContractViaMetamask();
+
+    console.log(nftContractAddress, tokenId, price);
+    const res = await _contract.createMarketSale(nftContractAddress, tokenId, {
+      value: parseEther(price)
+    });
   }
 }
