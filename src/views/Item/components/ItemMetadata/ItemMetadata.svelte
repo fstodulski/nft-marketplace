@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Heart } from 'svelte-heros-v2';
-  
+
   import { ItemStore } from '../../store/item.store';
 </script>
 
@@ -13,9 +13,11 @@
     </div>
   </div>
 
-  <div class="flex text-white paragraph-2 gap-3">
-    <span>From <span class="font-semibold">4.5 ETH</span></span>
+  {#if $ItemStore.price}
+    <div class="flex text-white paragraph-2 gap-3">
+      <span>From <span class="font-semibold">{$ItemStore.price} ETH</span></span>
 
-    <span>20 of 25 available</span>
-  </div>
+      <span>20 of 25 available</span>
+    </div>
+  {/if}
 </div>

@@ -9,10 +9,12 @@
       <img src="" alt="" />
     </figure>
     <div class="flex flex-col">
-      <span class="text-white paragraph-2 font-semibold">Mia Ayana</span>
-      <span class="text-xs dark:text-white w-10 overflow-hidden overflow-ellipsis"
-        >{$ItemStore.seller}</span
-      >
+      <span class="text-white paragraph-2 font-semibold">{$ItemStore.contractMetadata.name}</span>
+      {#if $ItemStore.seller}
+        <span class="text-xs dark:text-white w-10 overflow-hidden overflow-ellipsis"
+          >{$ItemStore.seller}</span
+        >
+      {/if}
     </div>
   </div>
 </div>

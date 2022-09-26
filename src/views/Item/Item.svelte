@@ -52,9 +52,7 @@
         <CreatorDetails />
         <ItemTabs />
 
-        {#if $ItemStore.seller !== $WalletStore.address}
-          {$ItemStore.seller}
-          {$WalletStore.address}
+        {#if $ItemStore.seller !== $WalletStore.address && $ItemStore.seller}
           <div class="flex items-center gap-5">
             <button class="btn solid lg" on:click={buyItem}>Buy for {$ItemStore.price} ETH</button>
             <button class="btn outlined lg">Make an offer</button>
