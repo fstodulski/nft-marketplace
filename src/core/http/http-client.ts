@@ -6,5 +6,5 @@ export const alchemyClient = axios.create({
 });
 
 export const httpClient = axios.create({
-  baseURL: 'http://127.0.0.1:5173/api'
+  baseURL: import.meta.env.VITE_API_BASE_URI
 });
