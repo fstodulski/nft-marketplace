@@ -7,7 +7,7 @@ import { NftRepository } from '../repository/nft/nft.repository';
 import { marketItemParser } from '../utils/marketitem-parser';
 
 export class MarketplaceService {
-  public static async getMarketItem(tokenId: number): Promise<MarketItemParsed> {
+  public static async getMarketItem(tokenId: number): Promise<MarketItemParsed | undefined> {
     try {
       const _contract = await GetContractViaInfura();
 
@@ -15,7 +15,7 @@ export class MarketplaceService {
 
       return marketItemParser(item);
     } catch (e) {
-      throw new Error(`Can't fetch item`);
+      return undefined;
     }
   }
 
@@ -31,7 +31,7 @@ export class MarketplaceService {
         value: parseEther('0.1')
       });
 
-      const tx = req.wait();
+      const tx = await req.wait();
 
       console.log(tx);
     } catch (e) {
@@ -41,16 +41,16 @@ export class MarketplaceService {
 
   public static async fetchMarketItems(
     customContractProvider?: Contract
-  ): Promise<Array<NFTMetadata>> {
+  ): Promise<Array<MarketItemParsed>> {
     try {
       const _contract = customContractProvider || (await GetContractViaInfura());
 
-      const res = (await _contract.fetchMarketItems()) as Array<FetchMarketItemsRaw>;
+      const res = (await _contract.fetchMarketItems()) as Array<MarketItemsRaw>;
 
       const parsedMetadata = res.map(marketItemParser);
 
       const items = parsedMetadata.map(async (item) => {
-        const data = await NftRepository.single(item.nftContract, item.itemId.toString());
+        const data = await NftRepository.single(item.nftContract, item.itemId);
         return {
           ...item,
           ...data
@@ -88,11 +88,10 @@ export class MarketplaceService {
     nftContractAddress: string,
     tokenId: number,
     price: string
-  ): Promise<void> {
+  ): Promise<any> {
     const _contract = await GetContractViaMetamask();
 
-    console.log(nftContractAddress, tokenId, price);
-    const res = await _contract.createMarketSale(nftContractAddress, tokenId, {
+    return await _contract.createMarketSale(nftContractAddress, tokenId, {
       value: parseEther(price)
     });
   }

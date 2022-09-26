@@ -1,10 +1,10 @@
 import { writable } from 'svelte/store';
-import type { NFTItem } from '$core/models/nft-iitem.models';
-import type { MarketItemParsed } from '$core/models/marketplace.models';
+import type { ItemModel } from '$core/models/item.model';
+import type { HttpStoreModel } from '$core/models/http-store.model';
 
-type ItemStore = NFTItem &
-  MarketItemParsed & {
-    userImageUrl?: string;
-  };
+type ItemStore = ItemModel & {
+  userImageUrl?: string;
+} & HttpStoreModel;
 const INITIAL_STATE: ItemStore | undefined = undefined;
+
 export const ItemStore = writable<ItemStore>(INITIAL_STATE);

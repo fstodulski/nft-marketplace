@@ -1,5 +1,5 @@
 export interface Contract {
-  address?: string;
+  address: string;
 }
 
 export interface ContractMetadata {

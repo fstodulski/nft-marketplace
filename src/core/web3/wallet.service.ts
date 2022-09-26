@@ -21,10 +21,10 @@ export class WalletService {
   public static async connectWallet() {
     const provider = await WalletService.metamaskProvider();
     if (typeof provider !== 'undefined') {
-      const [account] = await provider.send('eth_requestAccounts', []);
+      const [address] = await provider.send('eth_requestAccounts', []);
 
       WalletStore.set({
-        address: account
+        address
       });
 
       return;

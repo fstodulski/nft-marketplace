@@ -1,15 +1,17 @@
 <script lang="ts">
   import { Heart } from 'svelte-heros-v2';
+  import { BigNumber } from 'ethers';
 
-  import type { NFTMetadata } from '$core/models/get-nfts.model';
+  import type { NFTItem } from '$core/models/nft-item.models';
 
-  export let nft: NFTMetadata;
-
-  console.log(nft);
+  export let nft: NFTItem;
 </script>
 
 <div class="px-2 py-4 rounded-xl bg-black-three">
-  <a class=" flex flex-col gap-2 " href="/item/{nft.contract.address}/{nft.itemId}">
+  <a
+    class=" flex flex-col gap-2 "
+    href="/item/{nft.contract.address}/{nft.itemId || BigNumber.from(nft.id.tokenId).toNumber()}"
+  >
     <figure class="w-full h-[145px] overflow-hidden rounded-xl bg-black-two">
       <img class="w-full h-full object-cover" src={nft.metadata.image} alt="" />
     </figure>
@@ -19,11 +21,12 @@
       {nft.metadata.name}
     </span>
     <div class="flex justify-between items-center w-full">
-      <span class="paragraph-4 text-white font-semibold">
-        {nft.price}
-        <span class="font-light">ETH</span>
-      </span>
-
+      {#if nft.price}
+        <span class="paragraph-4 text-white font-semibold">
+          {nft.price}
+          <span class="font-light">ETH</span>
+        </span>
+      {/if}
       <div class="flex items-center gap-1">
         <Heart variation="solid" class="dark:text-dark w-5" />
         <span class="dark:text-white paragraph-4">92</span>

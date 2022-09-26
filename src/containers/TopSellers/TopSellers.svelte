@@ -1,20 +1,7 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  import { UserRepository } from '$core/repository/user/user.repository';
-
   import TopSellerBox from './components/TopSellerBox/TopSellerBox.svelte';
 
-  let topSellers: Array<any> = [];
-
-  const _fetchTopSellers = async (): Promise<void> => {
-    const res = await UserRepository.topSellers();
-
-    topSellers = res;
-  };
-  onMount(async () => {
-    await _fetchTopSellers();
-  });
+  export let topSellers: Array<any> = [];
 </script>
 
 <section class="flex flex-col w-full gap-5 pb-10 wrapper">

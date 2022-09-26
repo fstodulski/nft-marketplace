@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
-
-  import { WalletService } from '$core/web3/wallet.service';
+  import { onDestroy, onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   import Footer from '$containers/Footer/Footer.svelte';
 
@@ -12,19 +11,21 @@
 
   import '../app.scss';
 
-  const _connectWallet = async (): Promise<void> => {
-    await WalletService.connectWallet();
+  const _login = async (): Promise<void> => {
+    await UserRepository.login(get(WalletStore).address);
   };
 
-  const _login = async (): Promise<void> => {
-    await UserRepository.login($WalletStore.address);
-  };
+  const _walletStore$ = WalletStore.subscribe(async (store) => {
+    if (store.address) {
+      await _login();
+    }
+  });
 
   onMount(async (): Promise<void> => {
-    // await _connectWallet();
-    // await _login();
     document.getElementsByTagName('body')[0].classList.add('dark');
   });
+
+  onDestroy(_walletStore$);
 </script>
 
 <Header />

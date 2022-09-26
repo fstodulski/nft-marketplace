@@ -1,14 +1,18 @@
 import type { Load } from '@sveltejs/kit';
-import axios from 'axios';
+import { httpClient } from '$core/http/http-client';
+import { error } from '@sveltejs/kit';
 
 export const load: Load = async ({ params }) => {
-  const res = await axios.get(`http://127.0.0.1:5173/api/user/single`, {
+  const res = await httpClient.get(`/user/single`, {
     params: {
       address: params.id
     }
   });
 
-  console.log(res.data);
-
-  return res.data;
+  if (res.data) {
+    return {
+      user: res.data
+    };
+  }
+  return error(404, 'could not find');
 };

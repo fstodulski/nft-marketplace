@@ -1,20 +1,28 @@
 <script lang="ts">
   import { onMount } from 'svelte';
+  import { get } from 'svelte/store';
 
   import { page } from '$app/stores';
 
+  import { WalletStore } from '$core/store/wallet';
   import { tilt } from '$core/utils/tilt';
+  import { WalletService } from '$core/web3/wallet.service';
 
   import CreatorDetails from './components/CreatorDetails/CreatorDetails.svelte';
   import ItemMetadata from './components/ItemMetadata/ItemMetadata.svelte';
   import ItemTabs from './components/ItemTabs/ItemTabs.svelte';
+  import CheckoutModal from './containers/CheckoutModal/CheckoutModal.svelte';
+  import { CheckoutModalStore } from './containers/CheckoutModal/store/CheckoutModal.store';
   import { itemService } from './Item.service';
   import { ItemStore } from './store/item.store';
 
   const buyItem = async (): Promise<void> => {
-    const { contract, id } = $page.params;
+    await WalletService.connectWallet();
 
-    await itemService.buyItem(contract, id, $ItemStore.price);
+    CheckoutModalStore.set({
+      isOpen: true,
+      item: get(ItemStore)
+    });
   };
 
   const _fetchItem = async (): Promise<void> => {
@@ -44,11 +52,18 @@
         <CreatorDetails />
         <ItemTabs />
 
-        <div class="flex items-center gap-5">
-          <button class="btn solid lg" on:click={buyItem}>Buy for {$ItemStore.price} ETH</button>
-          <button class="btn outlined lg">Make an offer</button>
-        </div>
+        {#if $ItemStore.seller !== $WalletStore.address}
+          {$ItemStore.seller}
+          {$WalletStore.address}
+          <div class="flex items-center gap-5">
+            <button class="btn solid lg" on:click={buyItem}>Buy for {$ItemStore.price} ETH</button>
+            <button class="btn outlined lg">Make an offer</button>
+          </div>
+        {/if}
       </article>
     {/if}
   </section>
 </main>
+{#if $CheckoutModalStore.isOpen}
+  <CheckoutModal />
+{/if}

@@ -1,5 +1,5 @@
 import { alchemyClient } from '$core/http/http-client';
-import type { NFTItem } from '$core/models/nft-iitem.models';
+import type { NFTItem } from '$core/models/nft-item.models';
 
 export class NftRepository {
   public static async byOwner(address: string): Promise<Array<NFTItem>> {

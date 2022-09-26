@@ -5,7 +5,6 @@ const getHotBids = async (): Promise<void> => {
   try {
     const hotBids = await MarketplaceService.fetchMarketItems();
 
-    console.log(hotBids);
     HotBidsStore.set({
       hotBids
     });

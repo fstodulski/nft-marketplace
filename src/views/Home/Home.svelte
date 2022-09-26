@@ -3,8 +3,10 @@
   import TopSellers from '$containers/TopSellers/TopSellers.svelte';
 
   import HeroBanner from './components/HeroBanner/HeroBanner.svelte';
+
+  export let topSellers: Array<any>;
 </script>
 
 <HeroBanner />
-<TopSellers />
+<TopSellers {topSellers} />
 <HotBids />

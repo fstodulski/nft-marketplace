@@ -1,8 +1,8 @@
-import type { NFTMetadata } from '$core/models/get-nfts.model';
 import { writable } from 'svelte/store';
+import type { NFTItem } from '$core/models/nft-item.models';
 
 interface UserItemsStore {
-  ownedNfts: NFTMetadata[];
+  ownedNfts: NFTItem[];
 }
 
 const INITIAL_STATE: UserItemsStore = {

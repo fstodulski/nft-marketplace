@@ -26,6 +26,9 @@
 
   const allowForMarketplace = async (): Promise<void> => {
     const res = await FromContractService.allowMarketPlace($contractAddress.value, $tokenId.value);
+    console.log(res);
+
+    allowedStatus = AllowedStatus.DonKnowYet;
   };
 
   const isMarketplaceApproved = async (): Promise<void> => {

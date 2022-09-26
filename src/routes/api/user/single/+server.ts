@@ -19,5 +19,5 @@ export const GET: RequestHandler = async ({ url }: RequestEvent) => {
     return new Response(JSON.stringify(user));
   }
 
-  throw error(404, 'Not found');
+  return new Response(JSON.stringify(undefined));
 };

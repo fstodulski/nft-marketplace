@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
+  import { WalletService } from '../../core/web3/wallet.service';
   import FromContract from './containers/FromContract/FromContract.svelte';
   import UploadFile from './containers/UploadFile/UploadFile.svelte';
 
@@ -12,6 +15,14 @@
   const selectTab = (tab: Tab): void => {
     selectedTab = tab;
   };
+
+  const _connectWallet = async (): Promise<void> => {
+    await WalletService.connectWallet();
+  };
+
+  onMount(async (): Promise<void> => {
+    await _connectWallet();
+  });
 </script>
 
 <main class="max-w-2xl mx-auto flex flex-col mt-10">

@@ -18,6 +18,8 @@ export interface NFTItem {
   contract: Contract;
   contractMetadata: ContractMetadata;
   description: string;
+  error?: string;
+  price?: string;
   id: {
     tokenId: string;
     tokenMetadata: {

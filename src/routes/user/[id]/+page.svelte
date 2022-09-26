@@ -3,7 +3,9 @@
 
   import User from '$views/User/User.svelte';
 
-  export let data: UserModel;
+  export let data: {
+    user: UserModel;
+  };
 </script>
 
-<User {data} />
+<User data={data.user} />
