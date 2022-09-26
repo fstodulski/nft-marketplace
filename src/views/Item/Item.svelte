@@ -37,23 +37,23 @@
 </script>
 
 <main class="border-b border-black-one">
-  <section class="wrapper grid grid-cols-2 gap-32">
+  <section class="wrapper grid grid-cols-1 md:grid-cols-2 md:gap-32  w-full">
     {#if $ItemStore?.id}
       <figure
         use:tilt={{ max: 12, perspective: 1000, speed: 2000 }}
-        class="w-full aspect-square overflow-hidden rounded-xl shadow-2xl my-14"
+        class="w-full aspect-square overflow-hidden rounded-xl shadow-2xl my-8 md:my-14"
       >
         <img src={$ItemStore.metadata.image} alt="" class="object-cover h-full w-full" />
       </figure>
 
-      <article class="flex flex-col gap-6 pl-10 border-l border-black-one py-14">
+      <article class="flex flex-col gap-6 md:pl-10 md:border-l border-black-one py-6 md:py-14">
         <ItemMetadata />
 
         <CreatorDetails />
         <ItemTabs />
 
         {#if $ItemStore.seller !== $WalletStore.address && $ItemStore.seller}
-          <div class="flex items-center gap-5">
+          <div class="flex items-center gap-5 flex-wrap">
             <button class="btn solid lg" on:click={buyItem}>Buy for {$ItemStore.price} ETH</button>
             <button class="btn outlined lg">Make an offer</button>
           </div>
